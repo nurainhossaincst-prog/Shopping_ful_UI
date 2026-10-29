@@ -9,6 +9,10 @@ class Profile extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<Profile> {
+  final namecontter = TextEditingController();
+  final gmailcontter = TextEditingController();
+  final passwordcontler = TextEditingController();
+  final abutcontler = TextEditingController();
   final fromkey = GlobalKey<FormState>();
 
   void openBottomSheet() {
@@ -19,27 +23,39 @@ class _MyWidgetState extends State<Profile> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        return Container(
+          width: double.infinity,
+          height: 200,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
 
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(double.infinity, 50),
-                  backgroundColor: Colors.greenAccent,
-                  elevation: 10,
+              children: [
+                ListTile(
+                  autofocus: true,
+                  focusColor: Colors.blueGrey,
+                  onTap: () {
+                    setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Detelasepage(
+                            name: namecontter.text,
+                            email: gmailcontter.text,
+                            password: passwordcontler.text,
+                            about: abutcontler.text,
+                          ),
+                        ),
+                      );
+                    });
+                  },
+                  leading: Icon(Icons.login),
+                  title: Text('Loging page  '),
+                  selectedColor: Colors.deepOrangeAccent,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Detelasepage()),
-                  );
-                },
-                child: Text('data'),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -144,6 +160,7 @@ class _MyWidgetState extends State<Profile> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: namecontter,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(179, 241, 235, 235),
@@ -188,6 +205,7 @@ class _MyWidgetState extends State<Profile> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: gmailcontter,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(179, 241, 235, 235),
@@ -233,6 +251,7 @@ class _MyWidgetState extends State<Profile> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       obscureText: true,
+                      controller: passwordcontler,
 
                       decoration: InputDecoration(
                         filled: true,
@@ -278,8 +297,7 @@ class _MyWidgetState extends State<Profile> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                    
-
+                      controller: abutcontler,
                       decoration: InputDecoration(
                         fillColor: const Color.fromARGB(179, 241, 235, 235),
                         focusedBorder: OutlineInputBorder(
@@ -323,7 +341,7 @@ class _MyWidgetState extends State<Profile> {
 
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize:   Size(250, 60),
+                      fixedSize: Size(250, 60),
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
 
@@ -334,8 +352,8 @@ class _MyWidgetState extends State<Profile> {
                     ),
 
                     onPressed: () {
-                      openBottomSheet();
                       if (fromkey.currentState!.validate()) {
+                        openBottomSheet();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Color.fromARGB(255, 1, 48, 1),
